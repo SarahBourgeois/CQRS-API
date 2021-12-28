@@ -4,4 +4,11 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Abstract\" />
+    <Folder Include="Abstract\Response\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CrushOn.Core\CrushOn.Core.csproj" />
+  </ItemGroup>
 </Project>
