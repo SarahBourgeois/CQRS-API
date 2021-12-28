@@ -1,7 +1,7 @@
 ﻿using System;
-namespace CrushOn.Core.Entities
+namespace CrushOn.Application.Reponses
 {
-    public class SellerDto
+    public class SellerResponse
     {
         public string StoreName { get; set; }
         public string Email { get; set; }

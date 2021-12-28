@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Business\" />
+    <ProjectReference Include="..\CrushOn.Core\CrushOn.Core.csproj" />
+    <ProjectReference Include="..\CrushOn.Infrastructure\CrushOn.Infrastructure.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="Handlers\" />
+    <Folder Include="Mapper\" />
+    <Folder Include="Queries\" />
+    <Folder Include="Reponses\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
   </ItemGroup>
 </Project>

@@ -7,8 +7,14 @@
   <ItemGroup>
     <Folder Include="Abstract\" />
     <Folder Include="Abstract\Response\" />
+    <Folder Include="Data\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="Repositories\Base\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CrushOn.Core\CrushOn.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
   </ItemGroup>
 </Project>

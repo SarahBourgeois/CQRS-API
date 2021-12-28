@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="EntitiesModel\" />
-    <Folder Include="EntitiesDto\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="Repositories\Base\" />
   </ItemGroup>
 </Project>

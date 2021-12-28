@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
-using CrushOn.API.Controllers;
 using CrushOn.Core.Entities;
-using CrushOn.Infrastructure.Abstract.Business.Seller;
 using CrushOn.Infrastructure.Abstract.Response;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +14,7 @@ namespace CrushOn.API.Controllers.v1
     public class SellerController : CrushOnController
     {
         private readonly IServiceResponseWrapper _serviceResponseWrapper;
-        private readonly ISellerBusiness _sellerBusiness;
+        private readonly ISellerRepository _sellerRepository;
 
         /// <summary>
         /// Create new seller for the current logged-in user
@@ -27,7 +25,7 @@ namespace CrushOn.API.Controllers.v1
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.ServiceUnavailable)]
         [Route("create/{userRole}")]
-        public async Task<IActionResult> CreateNewSellerAsync(int userRole, SellerDto sellerDto)
+        public async Task<IActionResult> CreateNewSellerAsync(int userRole, SellerModel sellerDto)
         {
             try
             {
@@ -39,8 +37,8 @@ namespace CrushOn.API.Controllers.v1
                     ModelState.AddModelError("User Role", "Can't access to this feature. Need to be super admin");
                     return BadRequest(ModelState);
                 }
-                
-                SellerModel response = await _sellerBusiness.CreateNewSellerAsync(sellerDto);
+
+                SellerModel response = await _sellerRepository.CreateNewSellerAsync(sellerDto);
 
                 return Ok(response);
             }

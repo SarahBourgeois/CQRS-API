@@ -1,64 +1,47 @@
-using System;
-using System.IO;
-using CrushOn.Infrastructure.Abstract.Response;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
+using Microsoft.Extensions.Hosting;
 
-// ReSharper disable UnusedMember.Global
-
-namespace E.Showtime.Api.Http
+namespace CrushOn
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
-    internal class Startup
+    public class Startup
     {
-        private readonly IConfiguration _configuration;
-        private readonly IHostingEnvironment _env;
-
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            _configuration = configuration;
-            _env = env;
+            Configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseMvc()
-                    .UseCors("default");
-
-            }
-
-
-            if (!env.IsProduction())
-            {
-      
-            }
-        }
+        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddControllers();
+            services.AddSingleton<ISellerRepository, SellerRepository>();
+            //services.AddMediatR(typeof(Startup));
 
-            services.AddTransient<IServiceResponseWrapper, ServiceResponseWrapper>();
+        }
 
-            services.AddService();
-            services.AddBusiness();
-            services.AddCors(option => option.AddPolicy("default", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials()));
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
-            //services.Configure<MvcOptions>(options => options.Filters.Add(new CorsAuthorizationFilterFactory("default")));
-            services.AddMemoryCache();
+            app.UseHttpsRedirection();
 
+            app.UseRouting();
 
+            app.UseAuthorization();
 
-
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }
