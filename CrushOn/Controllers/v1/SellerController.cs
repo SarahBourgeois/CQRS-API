@@ -1,51 +1,80 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using CrushOn.API.Controllers;
+using CrushOn.Application.Commands;
 using CrushOn.Core.Entities;
-using CrushOn.Infrastructure.Abstract.Response;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-
-namespace CrushOn.API.Controllers.v1
+[Route("api/v1/seller")]
+[ApiController]
+public class SellerController : CrushOnController
 {
-    [Produces("application/json")]
-    [ApiController]
-    [Route("[v1/seller]")]
-    public class SellerController : CrushOnController
+    private readonly IMediator _mediator;
+
+    public SellerController(IMediator mediator)
     {
-        private readonly IServiceResponseWrapper _serviceResponseWrapper;
-        private readonly ISellerRepository _sellerRepository;
+        _mediator = mediator;
+    }
 
-        /// <summary>
-        /// Create new seller for the current logged-in user
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int)HttpStatusCode.ServiceUnavailable)]
-        [Route("create/{userRole}")]
-        public async Task<IActionResult> CreateNewSellerAsync(int userRole, SellerModel sellerDto)
+
+    /// <summary>
+    /// Create new seller
+    /// </summary>
+    /// <param name="userRole"></param>
+    /// <returns></returns>
+    [HttpGet]
+    [Route("createSeller/{userRole}")]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType((int)HttpStatusCode.ServiceUnavailable)]
+    [ProducesResponseType((int)HttpStatusCode.ServiceUnavailable)]
+    public async Task<IActionResult> CreateNewSeller(int userRole, [FromBody] CreateSellerCommand command)
+    {
+        if (!ModelState.IsValid)
+            return null;
+
+        if (userRole != 1)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
-                if (userRole != 1)
-                {
-                    ModelState.AddModelError("User Role", "Can't access to this feature. Need to be super admin");
-                    return BadRequest(ModelState);
-                }
-
-                SellerModel response = await _sellerRepository.CreateNewSellerAsync(sellerDto);
-
-                return Ok(response);
-            }
-            catch (Exception e)
-            {
-                return HandleErrorResponse(_serviceResponseWrapper.Wrap<object>(null, false, false, errorMessage: Convert.ToString(e)));
-            }
+            ModelState.AddModelError("User Role", "Can't add new seller. Need to be super admin");
+            return BadRequest(ModelState);
         }
+
+        var result = await _mediator.Send(command);
+
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Get all sellers 
+    /// </summary>
+    /// <param name="userRole"></param>
+    /// <returns></returns>
+    [HttpGet]
+    [Route("getAll/{userRole}")]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType((int)HttpStatusCode.ServiceUnavailable)]
+    [ProducesResponseType((int)HttpStatusCode.ServiceUnavailable)]
+    public async Task<IActionResult> GetAll(int userRole)
+    {
+        if (!ModelState.IsValid)
+            return null;
+
+        if (userRole != 1)
+        {
+            ModelState.AddModelError("User Role", "Can't access to this feature. Need to be super admin");
+            return BadRequest(ModelState);
+        }
+            
+
+        var list = new List<SellerModel>();
+        SellerModel s = new SellerModel
+        {
+            Email = "aaa",
+            StoreName = "bbb"
+        };
+        list.Add(s);
+
+        return Ok(list);
     }
 }

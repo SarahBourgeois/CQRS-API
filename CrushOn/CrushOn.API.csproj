@@ -6,6 +6,7 @@
 
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'CrushOn' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Kestrel' " />
   <ItemGroup>
     <ProjectReference Include="..\CrushOn.Core\CrushOn.Core.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
@@ -18,9 +19,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\v1\" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <Folder Include="Controllers\v1\" />
   </ItemGroup>
 </Project>

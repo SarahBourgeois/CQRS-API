@@ -9,19 +9,38 @@ using MediatR;
 public class CreateSellerHandler : IRequestHandler<CreateSellerCommand, SellerResponse>
 {
     private readonly ISellerRepository _sellerRepository;
+
     public CreateSellerHandler(ISellerRepository employeeRepository)
     {
         _sellerRepository = employeeRepository;
     }
+
     public async Task<SellerResponse> Handle(CreateSellerHandler request, CancellationToken cancellationToken)
     {
-        var employeeEntitiy = SellerMapper.Mapper.Map<SellerModel>(request);
-        if (employeeEntitiy is null)
+        var sellerEntity = SellerMapper.Mapper.Map<SellerModel>(request);
+        if (sellerEntity is null)
         {
             throw new ApplicationException("Issue with mapper");
         }
-        var newEmployee = await _sellerRepository.AddAsync(employeeEntitiy);
-        var employeeResponse = SellerMapper.Mapper.Map<SellerResponse>(newEmployee);
-        return employeeResponse;
+        var seller = await _sellerRepository.AddAsync(sellerEntity);
+        var sellerResponse = SellerMapper.Mapper.Map<SellerResponse>(seller);
+
+        return sellerResponse;
+    }
+
+    public Task<SellerResponse> Handle(CreateSellerCommand request, CancellationToken cancellationToken)
+    {
+        var sellerEntity = SellerMapper.Mapper.Map<SellerModel>(request);
+
+        if (sellerEntity is null)
+        {
+            throw new ApplicationException("Issue with mapper");
+        }
+
+        Task<SellerModel> newSeller =  _sellerRepository.AddAsync(sellerEntity);
+
+        SellerResponse sellerResponse = SellerMapper.Mapper.Map<SellerResponse>(newSeller);
+
+        return null;
     }
 }

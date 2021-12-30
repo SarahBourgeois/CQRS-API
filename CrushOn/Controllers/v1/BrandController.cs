@@ -1,9 +1,9 @@
 ﻿using System;
 namespace CrushOn.API.Controllers.v1
 {
-    public class EmptyClass
+    public class BrandController
     {
-        public EmptyClass()
+        public BrandController()
         {
         }
     }
