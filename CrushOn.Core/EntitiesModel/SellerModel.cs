@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CrushOn.Core.Entities
+namespace CrushOn.Core.EntitiesModel
 {
     public class SellerModel
     {

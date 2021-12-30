@@ -3,9 +3,10 @@ using System.Net;
 using System.Threading.Tasks;
 using CrushOn.API.Controllers;
 using CrushOn.Application.Commands;
-using CrushOn.Core.Entities;
+using CrushOn.Core.EntitiesModel;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using static CreateSellerHandler;
 
 [Route("api/v1/seller")]
 [ApiController]
@@ -24,7 +25,7 @@ public class SellerController : CrushOnController
     /// </summary>
     /// <param name="userRole"></param>
     /// <returns></returns>
-    [HttpGet]
+    [HttpPost]
     [Route("createSeller/{userRole}")]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.ServiceUnavailable)]
@@ -65,16 +66,9 @@ public class SellerController : CrushOnController
             ModelState.AddModelError("User Role", "Can't access to this feature. Need to be super admin");
             return BadRequest(ModelState);
         }
-            
 
-        var list = new List<SellerModel>();
-        SellerModel s = new SellerModel
-        {
-            Email = "aaa",
-            StoreName = "bbb"
-        };
-        list.Add(s);
+        var t = await _mediator.Send(new SellerModel());
 
-        return Ok(list);
+        return Ok(t);
     }
 }

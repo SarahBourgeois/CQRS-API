@@ -3,16 +3,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using CrushOn.Application.Commands;
 using CrushOn.Application.Reponses;
-using CrushOn.Core.Entities;
+using CrushOn.Core.EntitiesModel;
 using MediatR;
 
 public class CreateSellerHandler : IRequestHandler<CreateSellerCommand, SellerResponse>
 {
     private readonly ISellerRepository _sellerRepository;
+    private CrushOnContext _context;
+    
 
-    public CreateSellerHandler(ISellerRepository employeeRepository)
+    public CreateSellerHandler(ISellerRepository employeeRepository, CrushOnContext context)
     {
         _sellerRepository = employeeRepository;
+        _context = context;
     }
 
     public async Task<SellerResponse> Handle(CreateSellerHandler request, CancellationToken cancellationToken)
@@ -22,6 +25,7 @@ public class CreateSellerHandler : IRequestHandler<CreateSellerCommand, SellerRe
         {
             throw new ApplicationException("Issue with mapper");
         }
+
         var seller = await _sellerRepository.AddAsync(sellerEntity);
         var sellerResponse = SellerMapper.Mapper.Map<SellerResponse>(seller);
 

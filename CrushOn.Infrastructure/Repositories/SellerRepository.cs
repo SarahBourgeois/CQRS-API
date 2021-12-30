@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using CrushOn.Core.Entities;
+using CrushOn.Core.EntitiesModel;
 using Microsoft.EntityFrameworkCore;
 
 public class SellerRepository : Repository<SellerModel>, ISellerRepository
