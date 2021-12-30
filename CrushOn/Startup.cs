@@ -65,7 +65,7 @@ namespace CrushOn
             app.UseRouting();
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/v1/", "v1");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
                 options.RoutePrefix = string.Empty;
             });
             app.UseSwagger(options =>

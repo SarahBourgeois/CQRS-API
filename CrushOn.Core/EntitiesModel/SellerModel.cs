@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading.Tasks;
 
 namespace CrushOn.Core.EntitiesModel
 {
@@ -11,5 +13,10 @@ namespace CrushOn.Core.EntitiesModel
 
         public string StoreName { get; set; }
         public string Email { get; set; }
+
+        public static implicit operator Task<object>(SellerModel v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
 using CrushOn.API.Controllers;
 using CrushOn.Application.Commands;
-using CrushOn.Core.EntitiesModel;
+using CrushOn.Application.Queries;
+using CrushOn.Application.Reponses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using static CreateSellerHandler;
 
 [Route("api/v1/seller")]
 [ApiController]
@@ -18,7 +17,6 @@ public class SellerController : CrushOnController
     {
         _mediator = mediator;
     }
-
 
     /// <summary>
     /// Create new seller
@@ -33,7 +31,7 @@ public class SellerController : CrushOnController
     public async Task<IActionResult> CreateNewSeller(int userRole, [FromBody] CreateSellerCommand command)
     {
         if (!ModelState.IsValid)
-            return null;
+            return BadRequest(ModelState);
 
         if (userRole != 1)
         {
@@ -41,7 +39,7 @@ public class SellerController : CrushOnController
             return BadRequest(ModelState);
         }
 
-        var result = await _mediator.Send(command);
+        SellerResponse result = await _mediator.Send(command);
 
         return Ok(result);
     }
@@ -67,8 +65,8 @@ public class SellerController : CrushOnController
             return BadRequest(ModelState);
         }
 
-        var t = await _mediator.Send(new SellerModel());
+        var result = await _mediator.Send(new GetAllSellers());
 
-        return Ok(t);
+        return Ok(result);
     }
 }

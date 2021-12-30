@@ -12,9 +12,9 @@ public class CreateSellerHandler : IRequestHandler<CreateSellerCommand, SellerRe
     private CrushOnContext _context;
     
 
-    public CreateSellerHandler(ISellerRepository employeeRepository, CrushOnContext context)
+    public CreateSellerHandler(ISellerRepository sellerRepository, CrushOnContext context)
     {
-        _sellerRepository = employeeRepository;
+        _sellerRepository = sellerRepository;
         _context = context;
     }
 
@@ -27,12 +27,12 @@ public class CreateSellerHandler : IRequestHandler<CreateSellerCommand, SellerRe
         }
 
         var seller = await _sellerRepository.AddAsync(sellerEntity);
-        var sellerResponse = SellerMapper.Mapper.Map<SellerResponse>(seller);
+        SellerResponse sellerResponse = SellerMapper.Mapper.Map<SellerResponse>(seller);
 
         return sellerResponse;
     }
 
-    public Task<SellerResponse> Handle(CreateSellerCommand request, CancellationToken cancellationToken)
+    async Task<SellerResponse> IRequestHandler<CreateSellerCommand, SellerResponse>.Handle(CreateSellerCommand request, CancellationToken cancellationToken)
     {
         var sellerEntity = SellerMapper.Mapper.Map<SellerModel>(request);
 
@@ -41,10 +41,14 @@ public class CreateSellerHandler : IRequestHandler<CreateSellerCommand, SellerRe
             throw new ApplicationException("Issue with mapper");
         }
 
-        Task<SellerModel> newSeller =  _sellerRepository.AddAsync(sellerEntity);
+        using Task<SellerModel> newSeller = _sellerRepository.AddAsync(sellerEntity);
+        SellerResponse sellerResponse = new SellerResponse
+        {
+            Email = newSeller.Result.Email,
+            StoreName = newSeller.Result.StoreName
+        };
 
-        SellerResponse sellerResponse = SellerMapper.Mapper.Map<SellerResponse>(newSeller);
-
-        return null;
+        return sellerResponse;
     }
+
 }

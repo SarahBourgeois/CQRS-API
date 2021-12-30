@@ -51,7 +51,6 @@ namespace CrushOn
                 context.Sellers.AddRange(
                     new SellerModel
                     {
-                        Id = 1,
                         StoreName = "American Vintage",
                         Email = "americanvintage@gmail.com"
                     });
