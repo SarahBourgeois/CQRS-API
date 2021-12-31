@@ -4,6 +4,7 @@ using CrushOn.API.Controllers;
 using CrushOn.Application.Commands;
 using CrushOn.Application.Queries;
 using CrushOn.Application.Reponses;
+using CrushOn.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,7 +34,7 @@ public class SellerController : CrushOnController
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        if (userRole != 1)
+        if (userRole != (int)UserRole.SuperAdmin)
         {
             ModelState.AddModelError("User Role", "Can't add new seller. Need to be super admin");
             return Forbid();
@@ -59,7 +60,7 @@ public class SellerController : CrushOnController
         if (!ModelState.IsValid)
             return null;
 
-        if (userRole != 1)
+        if (userRole != (int)UserRole.SuperAdmin)
         {
             ModelState.AddModelError("User Role", "Can't access to this feature. Need to be super admin");
             return Forbid();
