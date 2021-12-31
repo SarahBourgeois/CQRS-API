@@ -28,7 +28,7 @@ public class SellerController : CrushOnController
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.ServiceUnavailable)]
     [ProducesResponseType((int)HttpStatusCode.ServiceUnavailable)]
-    public async Task<IActionResult> CreateNewSeller(int userRole, [FromBody] CreateSellerCommand command)
+    public async Task<IActionResult> CreateNewSeller(int userRole, [FromBody] SellerCommand command)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);

@@ -6,19 +6,19 @@ using CrushOn.Application.Reponses;
 using CrushOn.Core.EntitiesModel;
 using MediatR;
 
-public class CreateSellerHandler : IRequestHandler<CreateSellerCommand, SellerResponse>
+public class SellerHandler : IRequestHandler<SellerCommand, SellerResponse>
 {
     private readonly ISellerRepository _sellerRepository;
     private CrushOnContext _context;
     
 
-    public CreateSellerHandler(ISellerRepository sellerRepository, CrushOnContext context)
+    public SellerHandler(ISellerRepository sellerRepository, CrushOnContext context)
     {
         _sellerRepository = sellerRepository;
         _context = context;
     }
 
-    public async Task<SellerResponse> Handle(CreateSellerHandler request, CancellationToken cancellationToken)
+    public async Task<SellerResponse> Handle(SellerHandler request, CancellationToken cancellationToken)
     {
         var sellerEntity = CrushOnMapper.Mapper.Map<SellerModel>(request);
         if (sellerEntity is null)
@@ -32,7 +32,7 @@ public class CreateSellerHandler : IRequestHandler<CreateSellerCommand, SellerRe
         return sellerResponse;
     }
 
-    async Task<SellerResponse> IRequestHandler<CreateSellerCommand, SellerResponse>.Handle(CreateSellerCommand request, CancellationToken cancellationToken)
+    async Task<SellerResponse> IRequestHandler<SellerCommand, SellerResponse>.Handle(SellerCommand request, CancellationToken cancellationToken)
     {
         var sellerEntity = CrushOnMapper.Mapper.Map<SellerModel>(request);
 

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using CrushOn.Application.Reponses;
+using MediatR;
+
 namespace CrushOn.Application.Commands
 {
-    public class CreateProductCommand
+    public class ProductCommand : IRequest<ProductResponse>
     {
         public string Title { get; set; }
         public int Stock { get; set; }

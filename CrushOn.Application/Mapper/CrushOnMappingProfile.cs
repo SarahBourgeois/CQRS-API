@@ -8,10 +8,10 @@ public class CrushOnMappingProfile : Profile
     public CrushOnMappingProfile()
     {
         CreateMap<SellerModel, SellerResponse>().ReverseMap();
-        CreateMap<SellerModel, CreateSellerCommand>().ReverseMap();
+        CreateMap<SellerModel, SellerCommand>().ReverseMap();
 
         CreateMap<ProductModel, ProductResponse>().ReverseMap();
-        CreateMap<ProductModel, CreateProductCommand>().ReverseMap();
+        CreateMap<ProductModel, ProductCommand>().ReverseMap();
 
     }
 

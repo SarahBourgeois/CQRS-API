@@ -42,7 +42,6 @@ namespace CrushOn
             using (var context = new CrushOnContext(
                 serviceProvider.GetRequiredService<DbContextOptions<CrushOnContext>>()))
             {
-                // Look for any board games.
                 if (context.Sellers.Any())
                 {
                     return;   // Data was already seeded
@@ -54,6 +53,14 @@ namespace CrushOn
                         StoreName = "American Vintage",
                         Email = "americanvintage@gmail.com"
                     });
+                context.SaveChanges();
+                context.Products.AddRange(
+              new ProductModel
+              {
+                  Title = "Manteau",
+                  Stock = 1,
+                  Price = 45
+              });
                 context.SaveChanges();
             }
         }

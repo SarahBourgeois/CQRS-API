@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using CrushOn.Core.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,9 +36,12 @@ namespace CrushOn
                 });
             });
             services.AddAutoMapper(typeof(Startup));
-            services.AddMediatR(typeof(CreateSellerHandler).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(SellerHandler).GetTypeInfo().Assembly);
+
+            // repositories 
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<ISellerRepository, SellerRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
 
         }
 
