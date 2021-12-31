@@ -8,6 +8,7 @@
     <Folder Include="EntitiesModel\" />
     <Folder Include="Repositories\" />
     <Folder Include="Repositories\Base\" />
+    <Folder Include="Enums\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.0" />

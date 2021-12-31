@@ -20,21 +20,21 @@ public class CreateSellerHandler : IRequestHandler<CreateSellerCommand, SellerRe
 
     public async Task<SellerResponse> Handle(CreateSellerHandler request, CancellationToken cancellationToken)
     {
-        var sellerEntity = SellerMapper.Mapper.Map<SellerModel>(request);
+        var sellerEntity = CrushOnMapper.Mapper.Map<SellerModel>(request);
         if (sellerEntity is null)
         {
             throw new ApplicationException("Issue with mapper");
         }
 
         var seller = await _sellerRepository.AddAsync(sellerEntity);
-        SellerResponse sellerResponse = SellerMapper.Mapper.Map<SellerResponse>(seller);
+        SellerResponse sellerResponse = CrushOnMapper.Mapper.Map<SellerResponse>(seller);
 
         return sellerResponse;
     }
 
     async Task<SellerResponse> IRequestHandler<CreateSellerCommand, SellerResponse>.Handle(CreateSellerCommand request, CancellationToken cancellationToken)
     {
-        var sellerEntity = SellerMapper.Mapper.Map<SellerModel>(request);
+        var sellerEntity = CrushOnMapper.Mapper.Map<SellerModel>(request);
 
         if (sellerEntity is null)
         {

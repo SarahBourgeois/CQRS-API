@@ -32,17 +32,6 @@ namespace CrushOn
                     Version = "v1",
                     Title = "CrushOn API",
                     Description = "Crushon BO",
-                    TermsOfService = new Uri("https://example.com/terms"),
-                    Contact = new OpenApiContact
-                    {
-                        Name = "Example Contact",
-                        Url = new Uri("https://example.com/contact")
-                    },
-                    License = new OpenApiLicense
-                    {
-                        Name = "Example License",
-                        Url = new Uri("https://example.com/license")
-                    }
                 });
             });
             services.AddAutoMapper(typeof(Startup));
@@ -79,8 +68,6 @@ namespace CrushOn
             {
                 endpoints.MapControllers();
             });
-
-
         }
 
 

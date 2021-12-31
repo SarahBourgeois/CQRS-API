@@ -3,11 +3,16 @@ using CrushOn.Application.Commands;
 using CrushOn.Application.Reponses;
 using CrushOn.Core.EntitiesModel;
 
-public class SellerMappingProfile : Profile
+public class CrushOnMappingProfile : Profile
 {
-    public SellerMappingProfile()
+    public CrushOnMappingProfile()
     {
         CreateMap<SellerModel, SellerResponse>().ReverseMap();
         CreateMap<SellerModel, CreateSellerCommand>().ReverseMap();
+
+        CreateMap<ProductModel, ProductResponse>().ReverseMap();
+        CreateMap<ProductModel, CreateProductCommand>().ReverseMap();
+
     }
+
 }
