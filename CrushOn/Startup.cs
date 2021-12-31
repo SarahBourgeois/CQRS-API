@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using CrushOn.Core.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,23 +33,15 @@ namespace CrushOn
                     Version = "v1",
                     Title = "CrushOn API",
                     Description = "Crushon BO",
-                    TermsOfService = new Uri("https://example.com/terms"),
-                    Contact = new OpenApiContact
-                    {
-                        Name = "Example Contact",
-                        Url = new Uri("https://example.com/contact")
-                    },
-                    License = new OpenApiLicense
-                    {
-                        Name = "Example License",
-                        Url = new Uri("https://example.com/license")
-                    }
                 });
             });
             services.AddAutoMapper(typeof(Startup));
-            services.AddMediatR(typeof(CreateSellerHandler).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(SellerHandler).GetTypeInfo().Assembly);
+
+            // repositories 
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<ISellerRepository, SellerRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
 
         }
 
@@ -79,8 +72,6 @@ namespace CrushOn
             {
                 endpoints.MapControllers();
             });
-
-
         }
 
 

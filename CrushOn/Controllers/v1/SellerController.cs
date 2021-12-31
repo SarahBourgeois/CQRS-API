@@ -28,7 +28,7 @@ public class SellerController : CrushOnController
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.ServiceUnavailable)]
     [ProducesResponseType((int)HttpStatusCode.ServiceUnavailable)]
-    public async Task<IActionResult> CreateNewSeller(int userRole, [FromBody] CreateSellerCommand command)
+    public async Task<IActionResult> CreateNewSeller(int userRole, [FromBody] SellerCommand command)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -36,7 +36,7 @@ public class SellerController : CrushOnController
         if (userRole != 1)
         {
             ModelState.AddModelError("User Role", "Can't add new seller. Need to be super admin");
-            return BadRequest(ModelState);
+            return Forbid();
         }
 
         SellerResponse result = await _mediator.Send(command);
@@ -62,7 +62,7 @@ public class SellerController : CrushOnController
         if (userRole != 1)
         {
             ModelState.AddModelError("User Role", "Can't access to this feature. Need to be super admin");
-            return BadRequest(ModelState);
+            return Forbid();
         }
 
         var result = await _mediator.Send(new GetAllSellers());
