@@ -1,6 +1,5 @@
 # CrushOn-api
-Test technique pour Crushon, le marketplace des vêtements.
-
+CQRS Implementation
 
 ## Description du projet  ✨
 Ce projet a pour but de développer une solution back-office pour les vendeurs.
