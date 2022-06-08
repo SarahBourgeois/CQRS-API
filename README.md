@@ -1,4 +1,4 @@
-# CrushOn-api
+# CQRS-api
 CQRS Implementation
 
 ## Description du projet  ✨
